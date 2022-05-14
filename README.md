@@ -13,7 +13,7 @@ For Windows
 
 For Linux
 
-```
+```bash
 chmod +x ./defa-server
 chmod 777 -R public/
 ./defa-server
@@ -24,10 +24,13 @@ chmod 777 -R public/
 Default Port is 8081
 
 From Network
-
+```
 http://(youripaddress):8081/
 http://(youripaddress):8081/yourfilename
-From Local Machine
+```
 
+From Local Machine
+```
 http://localhost:8081/
 http://localhost:8081/yourfilename
+```
