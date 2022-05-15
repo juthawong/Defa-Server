@@ -2,7 +2,7 @@
 Basic HTTP Server Foe Serving Static File
 
 ## Download
-**[Download Version 0.0.1](https://github.com/juthawong/Defa-Server/releases)**
+**[Download Version 0.1.0](https://github.com/juthawong/Defa-Server/releases)**
 
 ## Start Server
 
