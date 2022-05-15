@@ -37,7 +37,7 @@ fn handle_write(mut stream: TcpStream, path: &str) {
     if path == "/" || path == "404" {
         filename = "index.html";
     } else {
-        filename = path;
+        filename = path
     }
     let response = read_file(filename);
     println!("{:?}", response);
@@ -45,7 +45,7 @@ fn handle_write(mut stream: TcpStream, path: &str) {
         Some(b) => b,
         None => "".to_string(),
     };
-    write!(stream, "HTTP/1.1 {} {}\r\n\r\n{}", 200, "Ok", body);
+    write!(stream, "HTTP/1.1 {} {}\r\n\r\n{}", 200, "Ok", body).ok();
     stream.flush().unwrap()
 }
 
@@ -53,15 +53,17 @@ fn handle_client(stream: TcpStream) {
     let path = handle_read(&stream);
     handle_write(stream, &path);
 }
-
+fn get_current_directory() -> String {
+    let cwd = env::current_dir().unwrap();
+    return cwd.into_os_string().into_string().unwrap();
+}
 fn read_file(file_path: &str) -> Option<String> {
-    let default_path = format!("{}/public", env!("CARGO_MANIFEST_DIR"));
-    let public_path = env::var("PUBLIC_PATH").unwrap_or(default_path);
-    let path = format!("{}/{}", public_path, file_path);
-
+    let default_path = format!("{}/public", get_current_directory());
+    let path = format!("{}/{}", default_path, file_path);
+    println!("Read File: {}", path);
     match fs::canonicalize(path) {
         Ok(path) => {
-            if path.starts_with(&public_path) {
+            if path.starts_with(&default_path) {
                 let contents = fs::read_to_string(path).ok();
                 return contents;
             } else {
